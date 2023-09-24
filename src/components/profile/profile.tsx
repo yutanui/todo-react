@@ -1,7 +1,18 @@
 import React, { FC, ReactElement} from 'react';
 import { Avatar,Box, Typography } from '@mui/material';
 
-export const Profile: FC = (): ReactElement => {
+// check type at runtime
+import  PropTypes from 'prop-types';
+
+// check type at compile time
+interface IProfile {
+    name : string;
+}
+
+export const Profile: FC<IProfile> = (props): ReactElement => {
+
+    const { name } = props;
+
     return(
         <Box display="flex" 
         flexDirection="column"
@@ -14,10 +25,12 @@ export const Profile: FC = (): ReactElement => {
                 backgroundColor: 'primary.main',
                 marginBottom: '16px',
             }}>
-                <Typography variant="h4" color="text.primary">N</Typography>
+                <Typography variant="h4" color="text.primary">
+                    {`${ name.substring(0,1)}`}
+                </Typography>
             </Avatar>
             <Typography variant="h6" color="text.primary">
-                Welcome, Nui
+                 {`Welcome, ${name}`}
             </Typography>
             <Typography variant="body1" color="text.primary">
                 This is your personal task manager
@@ -25,3 +38,7 @@ export const Profile: FC = (): ReactElement => {
         </Box>
     );
 }
+
+ Profile.propTypes = {
+     name : PropTypes.string.isRequired,
+ }
